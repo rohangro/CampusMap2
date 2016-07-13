@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/2000/REC-xhtml1-20000126/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>About CampusMap</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div id="top">
+	<h1>About CampusMap</h1>
+<!--#include virtual="/cgi-bin/menu.pl?abstract"-->
+</div>
+
+<h2>Abstract</h2>
+
+<p>
+	CampusMap is an application that provides students and visitors with
+	visual directions around campus. Pathfinding data is created with a
+	visual editor, and displayed to users via a web interface.
+</p>
+
+<p>
+	The editor, a desktop application, is used to overlay an existing map
+	image with data about the locations that appear on the map and the
+	paths between those locations. From inside the editor, the path data
+	can be converted to a graph and exported to a file format readable by
+	the online interface.
+</p>
+
+<p>
+	Through the online interface, users may search for up to two locations at a
+	time and view the shortest path between them, as well as the distance and
+	approximate walking time (based on user-adjustable walking speed) of that path.
+	Users may drag, scroll, and zoom the map in real-time, in the style of Google
+	Maps. This allows for the quick and easy viewing of the whole campus. Based on
+	optional keywords attached to each location in the editor, users may also
+	search for the closest location of a certain kind. (For example, to find the
+	closest parking lot to a given building.)
+</p>
+
+<h2>Copyright</h2>
+
+<p>
+	Path information and web application copyright 2005 Michael Kelly and David Lindquist.
+</p>
+
+<p>
+	Map images copyright 2000 Regents of the University of California.
+</p>
+
+<h2>Thanks</h2>
+<p>
+	David and Michael would like to thank Pat Neill for informatic support,
+	helpful suggestions, and encouragement. We'd also like to thank
+	Vladimir Orlic for getting us the pretty base map.
+
+</p>
+
+</body>
+</html>

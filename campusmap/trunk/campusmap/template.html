@@ -1,0 +1,270 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/2000/REC-xhtml1-20000126/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>CampusMap</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="{{ css_dir }}/main.css" />
+<link rel="stylesheet" href="{{ css_dir }}/js.css" />
+<link rel="SHORTCUT ICON" href="/favicon.ico" />
+
+<style type="text/css">
+	/* CSS set by the template */
+	#locButton_src {
+		background-image: url('{{ img_dir }}/green-dot-simple.png');
+	}
+	#locButton_dst {
+		background-image: url('{{ img_dir }}/red-dot-simple.png');
+	}
+</style>
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-18212209-1']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</head>
+<body id="theBody">
+
+<script type="text/javascript" src="{{ js_dir }}/drag.js"></script>
+<script type="text/javascript" src="{{ js_dir }}/menus.js"></script>
+<script type="text/javascript">
+	// set global variables through the template
+	var self			= "{{ self }}";
+	var zoomButtonURL		= "{{ img_dir }}/zoom-level.png";
+	var zoomButtonSelectedURL	= "{{ img_dir }}/zoom-level-selected.png";
+	var pathsDir			= "{{ paths_dir }}";
+	var gridDir			= "{{ grid_dir }}";
+	var imageDir			= "{{ img_dir }}";
+</script>
+
+<!-- Important announcements can go here: -->
+<!-- <div id="banner"></div> -->
+<div id="container">
+	<div id="header">
+		<div id="headerLeft">
+			<div id="headerLeftTop">
+				<img src="{{ img_dir }}/maplogo_small.png"
+					width="151" height="77" alt="Logo" />
+			</div>
+			<div id="headerMiddleTop">
+				Welcome to the UCSD Campus Map.<br />
+                Enter two locations to find the shortest path between them, or select only one to zoom to that location.
+			</div>
+
+			<div id="headerLeftBottom">
+				<!-- for input forms -->
+				<form method="get" action="{{ self }}" target="_self" name="main">
+				<!-- remember zoom level and window size when searching --> 
+				<input type="hidden" name="size" value="{{ size|escape }}" />
+				<input type="hidden" name="mpm" value="{{ mpm|escape }}" />
+
+				<div id="headerLeftBottomLeft">
+					<!-- 'start' location input -->
+					<label for="from">Start:</label>
+					<input tabindex="1" id="from" class="operaDoesNotInheritProperly" type="text" name="from" value="{{ txt_src|escape }}" />
+					<br />
+					<select tabindex="3" id="from_selector" name="from_selector" class="operaDoesNotInheritProperly">
+						<option value="">(None)</option>
+						<option value="" disabled="disabled">----------------</option>
+						{{ location_opt }}
+					</select>
+				</div>
+				<div id="headerLeftBottomRight">
+					<!-- a lonely submit button, all by its lonesome -->
+					<input type="submit" name="submit" value="Submit" />
+				</div>
+
+				<!-- 'end' location input -->
+				<label for="to">End:</label>
+				<input tabindex="2" id="to" class="operaDoesNotInheritProperly" type="text" name="to" value="{{ txt_dst|escape }}" />
+				<br />
+				<select tabindex="4" id="to_selector" name="to_selector" class="operaDoesNotInheritProperly">
+					<option value="">(None)</option>
+					<option value="" disabled="disabled">----------------</option>
+					<option value="keyword: food">Closest Food</option>
+					<option value="" disabled="disabled">----------------</option>
+					<option value="" disabled="disabled">Closest Parking...</option>
+					<option value="keyword: parking_s">S Permit</option>
+					<option value="keyword: parking_b">B Permit</option>
+					<option value="keyword: parking_a">A Permit</option>
+					<option value="keyword: visitorparking">Free/Metered</option>
+					<option value="" disabled="disabled">----------------</option>
+					{{ location_opt }}
+				</select>
+
+				</form>
+				<!-- this ends the main input form -->
+			</div>
+		</div>
+
+		<div id="headerRight">
+			<!-- google ads! -->
+			<script type="text/javascript"><!--                                                                                                           
+			google_ad_client = "pub-2325658500204571";                                                                                                    
+			google_ad_width = 125;                                                                                                                        
+			google_ad_height = 125;                                                                                                                       
+			google_ad_format = "125x125_as";                                                                                                              
+			google_ad_type = "text";                                                                                                                      
+			google_ad_channel ="";                                                                                                                        
+			//--></script>                                                                                                                                
+			<script type="text/javascript"                                                                                                                
+			src="http://pagead2.googlesyndication.com/pagead/show_ads.js">                                                                               
+			</script>
+			<!-- end google ads! -->
+		</div>
+	</div>
+	<div id="display">
+		<div id="displayLeft">
+            {% if src_found %}
+				<p>
+					<span id="fromTxt"><a href="javascript:centerOnLocation('src')"><b>From</b>: {{ txt_src|escape }}</a></span>
+					<a href="javascript:centerOnLocation('src')"><img src="{{ img_dir }}/center-on-this-location-2-sm.png" /></a>
+				</p>
+            {% else %}
+				<p>{{ src_help }}</p>
+            {% endif %}
+            {% if dst_found %}
+				<p>
+					<span id="toTxt"><a href="javascript:centerOnLocation('dst')"><b>To</b>: {{ txt_dst|escape }}</a></span>
+					<a href="javascript:centerOnLocation('dst')"><img src="{{ img_dir }}/center-on-this-location-2-sm.png" /></a>
+				</p>
+            {% else %}
+				<p>{{ dst_help }}</p>
+            {% endif %}
+
+            {% if path_found %}
+				<p><b>Distance</b>: {{ distance }} mi</p>
+				<p><b>Time</b>: <span id="time">{{ time }}</span> min</p>
+
+					<form action="{{ self }}" method="get" onsubmit="return calcTime('{{ path_dist }}', document.getElementById('howFast').value)">
+					It takes me
+					<input id="howFast" class="operaDoesNotInheritProperly" type="text" size="3" name="mpm" value="{{ mpm|escape }}" />
+					minutes to walk one mile.
+
+					<input type="submit" value="Recalculate" class="operaDoesNotInheritProperly" />
+					</form>
+            {% endif %}
+
+			<p><a id="staticLink" href="">[Static Link To This View]</a></p>
+
+            {% if txt_error %}
+				<p><b>{{ txt_error }}</b></p>
+            {% endif %}
+
+			<p>
+				<b>Note:</b><br />
+				Parking locations are not exhaustive! Use suggested walking paths at your own risk.
+			</p>
+
+            <p>
+                Data from 2005.
+            </p>
+			&nbsp;
+		</div>
+
+		<div id="buttons">
+			<table border="0" cellspacing="0" cellpadding="0" align="center">
+			<!-- this is the directional control pad -->
+			<tr>
+				<td>&nbsp;</td>
+				<td><a href="javascript:panUp()"><img src="{{ img_dir }}/up.png" width="20" height="20" border="0" alt="Up" /></a></td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td><a href="javascript:panLeft()"><img src="{{ img_dir }}/left.png" width="20" height="20" border="0" alt="Left" /></a></td>
+				<td><a href="javascript:centerView()"><img src="{{ img_dir }}/center.png" width="20" height="20" border="0" alt="Re-center" /></a></td>
+				<td><a href="javascript:panRight()"><img src="{{ img_dir }}/right.png" width="20" height="20" border="0" alt="Right" /></a></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td><a href="javascript:panDown()"><img src="{{ img_dir }}/down.png" width="20" height="20" border="0" alt="Down" /></a></td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td colspan="3">&nbsp;</td>
+			</tr>
+			<!-- this is the zoom widget -->
+			<tr>
+				<td colspan="3" align="center"><a href="javascript:zoomIn()"><img src="{{ img_dir }}/zoom-plus.png" width="30" height="30" border="0" alt="Zoom in" /></a></td>
+			</tr>
+			<tr>
+				<!-- this is filled in by JS -->
+				<td colspan="3" align="center" id="zoomSelect">
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" align="center"><a href="javascript:zoomOut()"><img src="{{ img_dir }}/zoom-minus.png" width="30" height="30" border="0" alt="Zoom out" /></a></td>
+			</tr>
+			</table>
+			<!-- end div buttons -->
+		</div>
+
+		<div id="displayMap">
+			<noscript>
+				<div id="noscript">
+					It appears you do not have JavaScript enabled. Sorry, you need it to use the fancy flashy interface.
+				</div>
+			</noscript>
+
+			<div id="mapContainer">
+				<!-- don't change this ordering. in IE,
+				ordering is significant (last on top)
+				-->
+				<div id="draggy">
+					<div id="map"></div>
+					<div id="path"></div>
+					<div id="locations"></div>
+				</div>
+			</div>
+
+			<script type="text/javascript">
+				menuInit('from', 'to', 'from_selector', 'to_selector',
+					"{{ txt_src_official }}", "{{ txt_dst_official }}");
+				dragInit();
+                {% if src_found %}
+					new Location("{{ src_name }}", {{ src_x }}, {{ src_y }}, 'src');
+                {% endif %}
+                {% if dst_found %}
+					new Location("{{ dst_name }}", {{ dst_x }}, {{ dst_y }}, 'dst');
+                {% endif %}
+
+				new Viewport({{ xoff }}, {{ yoff }},
+					{{ width }}, {{ height }},
+					{{ scale }}, "{{ map_name }}");
+
+                {% if path_found %}
+					new Path({{ path_x }}, {{ path_y }},
+						{{ path_w }}, {{ path_h }},
+						{{ path_dist }},
+						{{ path_src }}, {{ path_dst }});
+                {% endif %}
+
+				linkInit();
+			</script>
+
+		</div>
+
+	</div>
+
+	<div id="footer">
+		<p>
+			&copy; 2005-2010
+			<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#99;&#104;&#97;&#101;&#108;&#64;&#109;&#105;&#99;&#104;&#97;&#101;&#108;&#107;&#101;&#108;&#108;&#121;&#46;&#111;&#114;&#103;">Michael Kelly</a> and
+			<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#118;&#105;&#100;&#101;&#122;&#101;&#107;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">David Lindquist</a>.
+			CampusMap is not affiliated with the UC Regents or the University of California, San Diego.
+			{{ txt_debug }}
+		</p>
+	</div>
+</div>
+
+</body>
+</html>
+

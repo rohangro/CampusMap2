@@ -1,0 +1,39 @@
+BACKGROUND
+----------
+
+This is the App Engine version of CampusMap.
+
+This version uses entirely pre-generated paths. No online Dijkstra's algorithm
+at all (partly because we can't generate images with App Engine). The list of
+locations must also be converted to html for inclusion in the main page.
+
+INSTRUCTIONS
+------------
+
+To prepare static content:
+
+- run /utils/offline-locations.pl. This generates the static HTML for the
+  'locations' menu snippet.
+- run /utils/offline-paths.pl. This will take a LONG time (hours) and create
+  a lot of data (~1GB). This generates the path images for all pairs of
+  locations at all zoom levels. This obviates the need to ever run an online
+  shortest-path calculation online.
+- run:
+    /utils/offline-location-info.pl | /utils/offline-make-pickled-locations.py locations.pickle
+  This will generate locations.pickle, which we'll use for the python
+  interface.
+- create the pathinfo csv file from the path-metadata/* files created by
+  offline-paths.py: /utils/offline-pathinfo2csv.pl $PATH_METADATA
+- create the corresponding pathimage csv file by running pathinfo2pathimage.sh.
+  It's a simple pipeline that may need manual modification of input/output
+  filenames.
+- plug the csv file into the actual appengine DB via the 'uploading the
+  pathinfo db' instructions below.
+
+
+Downloading the PathInfo DB as csv:
+- $APP_ENGINE/appcfg.py download_data campusmap --filename=db.csv --url=http://localhost:8080/remote_api --config_file=campusmap/bulkloader.yaml --kind=PathInfo --email=test@example.com
+  (hit return at the password prompt)
+
+Uploading the PathInfo DB:
+- $APP_ENGINE/appcfg.py upload_data campusmap --url=http://localhost:8080/remote_api --config_file=campusmap/bulkloader.yaml --kind=PathInfo --email=test@example.com --filename=pathinfo.csv

@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/2000/REC-xhtml1-20000126/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>About CampusMap: Plans</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div id="top">
+	<h1>About CampusMap</h1>
+<!--#include virtual="/cgi-bin/menu.pl?plans"-->
+</div>
+
+<h2>Plans</h2>
+
+<p>Some parts of the application are not yet complete. This is a very brief
+outline of what we still plan to do. (This will all probably get done between
+the end of Summer Session I and the beginning of Fall 2005.) Crossed-off items
+have been completed.</p>
+
+<ul>
+	<li><strike><b>Complete path data.</b> The current path data is for
+	demonstration only and is in no way complete. Now that we have obtained
+	a vector version of the base map we wish to use, we can create our base
+	images and enter full path and location data.</strike> A detailed data
+	set has been entered. What remains is to tweak the data, and connect a
+	few remaining locations.</li>
+
+
+	<li><strike><b>A better base map.</b> The current map is the visitor map
+	PDF. (It even still has the key in the upper right-hand corner!) We
+	would like to use the colored visitor map, such as the one that is used by <a
+	href="http://maps.ucsd.edu/Viewer.htm?Zoom=2&Map=Visitor&O.x=88&O.y=73&Cmnd=Mgfy&View=Medium&P.x=206&P.y=154">maps.ucsd.edu</a>.</strike></li>
+
+	<li><strike><b>Complete building codes.</b> The application supports
+	associating a building code with each location (i.e., &quot;PCYNH&quot;
+	with &quot;Pepper Canyon Hall&quot;), and many, but not all, have been
+	entered.</strike></li>
+
+	<li><strike><b>Google Maps-style scrolling.</b> Who can resist?</strike></li>
+
+</ul>
+
+<a name="extend"></a>
+<h2>Extensibility</h2>
+
+<p>
+	These features are not specifically planned, but they are listed to
+	give an idea of how this project could expand:
+
+</p>
+
+
+<ul>
+	<li><b>Building maps.</b> Click on an individual building name to open
+	a sub-map (complete with all the features of the existing map --
+	locations, path finding, etc) of the inside of that building.</li>
+
+	<li><b>Maps of other locations.</b> For instance, an individual college
+	could have more detailed path information covering just their area of
+	campus. The map application is flexible, however, and the editor makes
+	it easy to add path data to <i>any</i> map, not just one of UCSD.</li>
+
+	<li><b>Integration with other applications.</b> Each location may have
+	an associated building code, so it is easy for external applications
+	that know building codes to build URLs for the map. As an example, to
+	show the path between CENTR and PCYNH, you simply access
+	<i>map.cgi?from=<b>CENTR</b>&amp;to=<b>PCYNH</b></i>.</li>
+
+</ul>
+
+</body>
+</html>

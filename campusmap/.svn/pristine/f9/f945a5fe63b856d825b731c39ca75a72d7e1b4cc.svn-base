@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/2000/REC-xhtml1-20000126/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>About UCSDMap: Using the JavaScript Interface</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div id="top">
+	<h1>About UCSDMap</h1>
+<!--#include virtual="/cgi-bin/menu.pl?js"-->
+</div>
+
+<h2>Moving the Map</h2>
+
+<p>There are three ways to scroll and zoom the map:</p>
+
+<ul>
+	<li>The controls to the left of the map view
+		<ul>
+			<li>The arrow buttons slide the map.</li>
+			<li>The circle resets the map to the default view.</li>
+			<li>The plus and minus buttons zoom in and out.</li>
+			<li>The ovals between the plus and minus buttons change the selected zoom level.</li>
+		</ul>
+	</li>
+
+	<li>Clicking and dragging inside the map view</li>
+
+	<li>Keyboard shortcuts (see below)</li>
+	
+</ul>
+
+<p>Additionally, clicking on one of the location names that appear to the left
+of the map centers on that location.</p>
+
+<h2>Keyboard Shortcuts</h2>
+<table border="0" cellpadding="0" cellspacing="10">
+	<tr align="left">
+		<th>Key</th>
+		<th>Function</th>
+	</tr>
+	<tr>
+		<td><b>+</b> (plus)</td>	
+		<td>Zoom in</td>
+	</tr>
+	<tr>
+		<td><b>-</b> (minus)</td>	
+		<td>Zoom out</td>
+	</tr>
+	<tr>
+		<td>Arrow keys</td>	
+		<td>Scroll the map in the given direction</td>
+	</tr>
+</table>
+
+<p><b>Note:</b> Not all key commands work in all browsers.</p>
+
+<h2>Browser Compatibility</h2>
+
+<p>The following browsers are compatible: Firefox, Internet Explorer, Safari, and Opera.</p>
+
+<p>Click <a href="browsers.shtml">here</a> for a full table listing interface
+functionality in all tested browsers.</p>
+
+</body>
+</html>
